@@ -53,7 +53,7 @@ class Start extends React.Component{
         )
     }
 
-    
+    //function to open the Chat screen
     openChat=()=>{
         this.props.navigation.navigate('Chat',{
             username:this.state.username,
@@ -61,11 +61,12 @@ class Start extends React.Component{
         
     }
 
+    //function update the State with the selected colour
     setColour=(colour)=>{
         this.setState({colour:colour});
         
     }
-
+    //function update the State with the typed-in username
     setName=(username)=>{
 
         this.setState({username:username})
