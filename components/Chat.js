@@ -20,8 +20,7 @@ class Chat extends React.Component{
 
         return(
             <View style={[styles.container,{backgroundColor: this.state.colour}]}>
-                
-                   
+   
                   <Text>Empty chat</Text>
                 
             </View>
