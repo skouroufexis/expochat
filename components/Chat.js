@@ -85,7 +85,7 @@ class Chat extends React.Component{
             wrapperStyle={{
               right: {
                         backgroundColor: 'green',
-
+                
                         },
 
               left: {
