@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import {KeyboardAvoidingView, StyleSheet, Text, View, TextInput,Button,TouchableOpacity,Image, ImageBackground } from 'react-native';
+import {Platform, KeyboardAvoidingView , StyleSheet, Text, View, TextInput,Button,TouchableOpacity,Image, ImageBackground } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { event } from 'react-native-reanimated';
 
@@ -19,7 +19,7 @@ class Start extends React.Component{
     render(){
         return(
             
-
+            
             <View style={styles.container}>
                 
                 <ImageBackground style={styles.background} source={require(image)}>
@@ -45,11 +45,8 @@ class Start extends React.Component{
                     </View>
                     
                 </ImageBackground>
-                 
+                
             </View>
-            
-            
-
         )
     }
 
