@@ -51,7 +51,7 @@ class Chat extends React.Component{
           <View style={[styles.container,{backgroundColor: this.state.colour}]}>
  
               <GiftedChat
-              onLongPress=''
+              
               renderBubble={this.renderBubble.bind(this)}
               messages={this.state.messages}
               onSend={messages => this.onSend(messages)}
@@ -153,6 +153,34 @@ class Chat extends React.Component{
           
           })
         
+    }
+
+    componentWillUnmount(){
+
+      //unsibscribe from two processes
+
+      var unsubscribe = auth.onAuthStateChanged(user=>{
+        this.setState({userID:user.uid});
+      })
+      unsubscribe();
+
+
+
+      unsubscribe=db.collection('messages').onSnapshot(snapshot=>{
+        let changes = snapshot.docChanges();
+        this.updateMessages(changes);
+      });
+
+      unsubscribe();
+
+
+
+
+
+
+      
+
+
     }
 
   
