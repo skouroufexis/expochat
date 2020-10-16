@@ -92,6 +92,7 @@ class Chat extends React.Component{
 
     componentDidMount(){
 
+        
        //get username and background colour values
        let username=this.props.route.params.username;
        let colour=this.props.route.params.colour;
@@ -274,9 +275,12 @@ class Chat extends React.Component{
               
           }).then(()=>{
               this.setState({messages:newMessages})
+          }).then(()=>{
+            this.storeOfflineMessages();
+
           });
           
-          this.storeOfflineMessages();
+
 
     }
 
@@ -286,6 +290,7 @@ class Chat extends React.Component{
       try {
         await AsyncStorage.setItem('messages',messages);
         console.log('successfully stored');
+        
       } catch (error) {
         console.log('error storing messages:'+ error);
       }
@@ -308,7 +313,9 @@ class Chat extends React.Component{
 
 
     deleteOfflineMessages=async()=>{
+
       try {
+        
         await AsyncStorage.removeItem('messages');
         console.log('offline messages successfully removed');
       } catch (error) {
@@ -321,7 +328,7 @@ class Chat extends React.Component{
         //at a later stage check whether the change is adding or deleting a message   
         changes.forEach(change=>{
         
-        // console.log(change.doc.data())
+        console.log(change.doc.data())
         })
 
         //display the messages from the updated database
@@ -373,8 +380,10 @@ class Chat extends React.Component{
           
       }).then(()=>{
           this.setState({messages:newMessages})
+      }).then(()=>{
+        this.storeOfflineMessages();
       });  
-      this.storeOfflineMessages();
+      
     
     }
     
