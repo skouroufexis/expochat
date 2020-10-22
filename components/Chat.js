@@ -3,13 +3,15 @@ import React from 'react';
 import {Platform, KeyboardAvoidingView , StyleSheet, Text, View, TextInput,Button,TouchableOpacity,Image, ImageBackground } from 'react-native';
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
 import { GiftedChat,Bubble,InputToolbar } from 'react-native-gifted-chat'
+import CustomActions from './CustomActions'; 
 import { LogBox } from 'react-native';
 import { firestore } from 'firebase/app';
-
-
-
 import AsyncStorage from '@react-native-community/async-storage';
+
+//checks internet connection
 import NetInfo from '@react-native-community/netinfo';
+
+import MapView from 'react-native-maps';
 
 
 const firebase = require('firebase/app');
@@ -30,6 +32,7 @@ const firebaseConfig = {
   measurementId: "G-VH0DMRBQPM"
 };
 
+
 if (!firebase.apps.length){
   firebase.initializeApp(firebaseConfig);
   }
@@ -43,6 +46,8 @@ class Chat extends React.Component{
         this.state={username:'',
                     colour:'',
                     messages:[],
+                    image:[],
+                    location:[],
                     lastMessageId:'',
                     userID:'',
                     userConnected:false
@@ -68,6 +73,13 @@ class Chat extends React.Component{
               user={{
                   _id:this.state.userID
               }}
+
+              renderActions={this.renderCustomActions}
+
+              renderCustomView = {this.renderCustomView}
+
+                
+
               />
               { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null
               }
@@ -89,6 +101,49 @@ class Chat extends React.Component{
       
     }
 
+    renderCustomActions = (props) => {
+      
+      return <CustomActions currentMessage={this.state.messages}  addLocation={(longitude,latitude)=>this.addLocation(longitude,latitude)} addImageUrl={(image)=>this.addImageUrl(image)}  {...props} />;
+    };
+
+
+    renderCustomView (props) {
+      const { currentMessage} = props;
+      
+      if (currentMessage.location) {
+        
+        return (
+            <MapView
+              style={{width: 150,
+                height: 100,
+                borderRadius: 13,
+                margin: 3}}
+              region={{
+                latitude: currentMessage.location.latitude,
+                longitude: currentMessage.location.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            />
+        );
+      }
+      return null;
+    }
+
+    
+
+    addImageUrl=(image)=>{
+
+        //set image url to the State
+        this.setState({image:image},()=>{this.onSend();});
+        
+
+    }
+
+    addLocation=(longitude,latitude)=>{
+      this.setState({location:{longitude:longitude,latitude:latitude}},()=>{this.onSend();});
+      
+    }
 
     componentDidMount(){
 
@@ -101,7 +156,7 @@ class Chat extends React.Component{
        this.props.navigation.setOptions({title:username});
 
 
-
+        //check connection
         NetInfo.fetch().then(connection=>{
           if(connection.isConnected)
             {
@@ -147,6 +202,8 @@ class Chat extends React.Component{
                         {
                           _id:data._id,
                           text:data.text,
+                          image:data.image,
+                          location:data.location,
                           createdAt:data.createdAt,
                           user:{_id:data.user._id,
                                 name: data.user.name,
@@ -196,27 +253,70 @@ class Chat extends React.Component{
     }
 
     onSend(messages){
-      
-        //define fields of new message
+
+      let text; 
+      let image;
+      let location;
+
+
+      //define fields of new message
+
+      //if user sends image or location without text
+       if(!messages)
+       {
+          text='';
+          if(this.state.image!='')//user sends image and no location
+            {
+              image=this.state.image;
+            }
+          else
+            {
+              image="";
+            }  
+          if(this.state.location!='')//user sends location and no image
+            {
+              location={latitude:this.state.location.latitude,
+                        longitude:this.state.location.longitude
+                        }
+            }
+          else
+            {
+              location="";
+            }
+            
+       } 
+       else
+       {
+
+        //if user types a message, it means that location and image will not be included
+        //in the message
+        text=messages[0].text;
+        image="";
+        location="";
+
+       }   
+
         let _id=this.state.lastMessageId;
         _id=_id+1;
       //update the last inserted id
       this.setState({lastMessageId:_id});
       
       //new message parameters
-      let text=messages[0].text;
+      
       let createdAt=new Date();
 
       // //user info
       let username=this.state.username;
       let avatar='https://placeimg.com/140/140/any';
-      
+
       // //add new message to database
       db.collection('messages').add(
 
           {
             _id:_id,
             text:text,
+            image:image,
+            location:location,
             createdAt:createdAt,
             user: {_id:this.state.userID,
                     name: username,
@@ -262,6 +362,8 @@ class Chat extends React.Component{
                   {
                     _id:data._id,
                     text:data.text,
+                    image:data.image,
+                    location:data.location,
                     createdAt:data.createdAt,
                     user:{_id:data.user._id,
                           name: data.user.name,
@@ -279,8 +381,8 @@ class Chat extends React.Component{
             this.storeOfflineMessages();
 
           });
-          
-
+              
+            
 
     }
 
@@ -367,6 +469,8 @@ class Chat extends React.Component{
               {
                 _id:data._id,
                 text:data.text,
+                image:data.image,
+                location:data.location,
                 createdAt:data.createdAt,
                 user:{_id:data.user._id,
                       name: data.user.name,
@@ -387,9 +491,6 @@ class Chat extends React.Component{
     
     }
     
-
-
-
     renderBubble(props) {
       return (
         <Bubble
@@ -431,14 +532,10 @@ class Chat extends React.Component{
     
 }
 
-
-
 const styles = StyleSheet.create({
     container:{
         flex:1
     }
-
-
   });
 
 export default Chat;
