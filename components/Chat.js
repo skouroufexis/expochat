@@ -134,13 +134,20 @@ class Chat extends React.Component{
 
     addImageUrl=(image)=>{
 
+        //empty the location State
+        this.setState({location:''});
+
         //set image url to the State
         this.setState({image:image},()=>{this.onSend();});
+        
         
 
     }
 
     addLocation=(longitude,latitude)=>{
+
+      //empty the image State
+      this.setState({image:''});
       this.setState({location:{longitude:longitude,latitude:latitude}},()=>{this.onSend();});
       
     }
@@ -268,15 +275,18 @@ class Chat extends React.Component{
           if(this.state.image!='')//user sends image and no location
             {
               image=this.state.image;
-              location="";
+              location='';
               
             }
           else if (this.state.location!='') //user sends location and no image
             {
-              image="";
+              
+
               location={latitude:this.state.location.latitude,
                 longitude:this.state.location.longitude
                 }
+
+              image='';
             }  
           
             
