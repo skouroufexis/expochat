@@ -271,7 +271,7 @@ class Chat extends React.Component{
               location="";
               
             }
-          else //user sends location and no image
+          else if (this.state.location!='') //user sends location and no image
             {
               image="";
               location={latitude:this.state.location.latitude,
