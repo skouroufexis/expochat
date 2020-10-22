@@ -18,7 +18,7 @@ const firebase = require('firebase/app');
 require('firebase/firestore');
 require('firebase/auth');
 
-LogBox.ignoreLogs(['Setting a timer']);
+LogBox.ignoreLogs(['Setting a timer','Animated.event']);
 
 // Firebase configuration
 const firebaseConfig = {
@@ -268,21 +268,17 @@ class Chat extends React.Component{
           if(this.state.image!='')//user sends image and no location
             {
               image=this.state.image;
+              location="";
+              
             }
-          else
+          else //user sends location and no image
             {
               image="";
-            }  
-          if(this.state.location!='')//user sends location and no image
-            {
               location={latitude:this.state.location.latitude,
-                        longitude:this.state.location.longitude
-                        }
-            }
-          else
-            {
-              location="";
-            }
+                longitude:this.state.location.longitude
+                }
+            }  
+          
             
        } 
        else
