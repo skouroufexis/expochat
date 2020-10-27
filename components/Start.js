@@ -68,13 +68,13 @@ class Start extends React.Component{
     }
 
     //function update the State with the selected colour
-    setColour=(colour)=>{
+    setColour=(colour='azure')=>{
         this.setState({colour:colour});
         
     }
 
     //function update the State with the typed-in username
-    setName=(username)=>{
+    setName=(username='user1')=>{
 
         this.setState({username:username})
     }
