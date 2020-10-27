@@ -14,7 +14,6 @@ class Start extends React.Component{
         super();
         this.state={username:'',
                     colour:'',
-                    
                     }
     }
     
@@ -61,9 +60,32 @@ class Start extends React.Component{
 
     //function to open the Chat screen
     openChat=()=>{
-        this.props.navigation.navigate('Chat',{
+
+        let defaultValues= async (name='User 1',colour='azure')=>{
+            if(this.state.username=='')
+                {
+                this.setState({username:name});
+                }
+
+                if(this.state.colour=='')
+                {
+                this.setState({colour:colour});
+                }
+
+                return;
+        }
+
+
+        defaultValues().then(()=>{
+            this.props.navigation.navigate('Chat',{
             username:this.state.username,
             colour:this.state.colour});
+        })
+
+        
+
+        
+       
         
     }
 
