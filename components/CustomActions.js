@@ -169,7 +169,7 @@ export default class CustomActions extends React.Component{
       url=url[url.length-1];
 
         let imagePath = await storageRef.child(url).put(blob);
-        imagePath =storageRef.child(url).getDownloadURL().then(function(imageUrl){
+        imagePath =storageRef.child(url).getDownloadURL().then((imageUrl)=>{
                 return imageUrl;
         });
         return imagePath;
