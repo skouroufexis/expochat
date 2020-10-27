@@ -48,20 +48,28 @@ export default class CustomActions extends React.Component{
           },
 
           async (buttonIndex) => {
-            switch (buttonIndex) {
-              case 0:
-                console.log('user wants to pick an image');
-                this.uploadPhoto();
-                return;
-              case 1:
-                console.log('user wants to take a photo');
-                this.takePhoto();
-                return;
-              case 2:
-                console.log('user wants to get their location');
-                this.sendLocation();
-              default:
+            try
+            {
+              switch (buttonIndex) {
+                case 0:
+                  console.log('user wants to pick an image');
+                  this.uploadPhoto();
+                  return;
+                case 1:
+                  console.log('user wants to take a photo');
+                  this.takePhoto();
+                  return;
+                case 2:
+                  console.log('user wants to get their location');
+                  this.sendLocation();
+                default:
+              }
             }
+            catch (error)
+            {
+              console.log(`error executing custom action: ${error}`);
+            }
+            
           },
         );
       }; 
@@ -72,6 +80,7 @@ export default class CustomActions extends React.Component{
 
 
       uploadPhoto = async ()=>{
+        
         const permissionUpload=await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
         if(permissionUpload.status=='granted')
@@ -103,76 +112,110 @@ export default class CustomActions extends React.Component{
       }
 
       takePhoto= async()=>{
-        const permissionCameraRoll=await Permissions.askAsync(Permissions.CAMERA_ROLL);
-        const permissionCamera= await Permissions.askAsync(Permissions.CAMERA);
-        if(permissionCamera.status=='granted' && permissionCameraRoll.status=='granted')
-
-          {
-            let image = await ImagePicker.launchCameraAsync({
-              mediaTypes: 'Images',
-            }).catch(error => console.log(`error taking image: ${error}`));
-       
-            if (!image.cancelled) {
-              try {
-                let url=image.uri;
-                //upload image to firebase and then get file download url
-                let imageUrl=await this.uploadToFirebase(url);
-                console.log(`successfully uploaded image ${url}`);
-                this.addImageUrl(imageUrl);
+        try
+        {
+          const permissionCameraRoll=await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          const permissionCamera= await Permissions.askAsync(Permissions.CAMERA);
+          if(permissionCamera.status=='granted' && permissionCameraRoll.status=='granted')
+  
+            {
+              let image = await ImagePicker.launchCameraAsync({
+                mediaTypes: 'Images',
+              }).catch(error => console.log(`error taking image: ${error}`));
+         
+              if (!image.cancelled) {
+                try {
+                  let url=image.uri;
+                  //upload image to firebase and then get file download url
+                  let imageUrl=await this.uploadToFirebase(url);
+                  console.log(`successfully uploaded image ${url}`);
+                  this.addImageUrl(imageUrl);
+                }
+  
+                catch (error){
+                  console.log(`error uploading image: ${error}`);
+                }
               }
-
-              catch (error){
-                console.log(`error uploading image: ${error}`);
-              }
+  
             }
+        }
 
-          }
+        catch (error)
+        {
+          console.log(`error taking picture: ${error}`);
+        }
+        
+        
 
       }
 
       sendLocation = async ()=>{
 
-        const permissionLocation = await Permissions.askAsync(Permissions.LOCATION);
-        if(permissionLocation.status === 'granted') {
-          let location = await Location.getCurrentPositionAsync({});
-     
-          if (location) {
-           
-           try {
-            let longitude=location.coords.longitude;
-            let latitude=location.coords.latitude;
-            this.addLocation(longitude,latitude);
-            console.log(`successfully sent location. Longitude: ${longitude}, latitude: ${latitude}`);
+        try
+        {
 
+          const permissionLocation = await Permissions.askAsync(Permissions.LOCATION);
+          if(permissionLocation.status === 'granted') {
+            let location = await Location.getCurrentPositionAsync({});
+       
+            if (location) {
+             
+             try {
+              let longitude=location.coords.longitude;
+              let latitude=location.coords.latitude;
+              this.addLocation(longitude,latitude);
+              console.log(`successfully sent location. Longitude: ${longitude}, latitude: ${latitude}`);
+  
+            }
+  
+            catch (error){
+              console.log(`error sending loation: ${error}`);
+            }
+            }
           }
 
-          catch (error){
-            console.log(`error sending loation: ${error}`);
-          }
-          }
+        }
+
+       
+
+        catch(error)
+        {
+          console.log(`error sending loation: ${error}`)
         }
 
       }
 
 
       uploadToFirebase = async (url)=>{
+       
+      try
+      {
 
-      const firebase = require ('firebase');
-      let storage = firebase.storage();
-      let storageRef = storage.ref();  
+        const firebase = require ('firebase');
+        let storage = firebase.storage();
+        let storageRef = storage.ref();  
 
-      const response = await fetch(url);
-      const blob = await response.blob();
+        const response = await fetch(url);
+        const blob = await response.blob();
       
-      //retrieve image name
-      url=url.split('/');
-      url=url[url.length-1];
+        //retrieve image name
+        url=url.split('/');
+        url=url[url.length-1];
 
         let imagePath = await storageRef.child(url).put(blob);
         imagePath =storageRef.child(url).getDownloadURL().then((imageUrl)=>{
                 return imageUrl;
         });
         return imagePath;
+
+      }
+      
+
+
+       catch(error)
+       {
+         console.log(`error uploading image to firebase: ${error}`)
+       } 
     }
 
 
