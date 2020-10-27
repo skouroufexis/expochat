@@ -400,7 +400,8 @@ class Chat extends React.Component{
         console.log('successfully stored');
         
       } catch (error) {
-        console.log('error storing messages:'+ error);
+        console.log(`error storing messages: ${error}`);
+        
       }
     }
 
@@ -415,7 +416,8 @@ class Chat extends React.Component{
         });
         console.log('successfully retrieved');
       } catch (error) {
-        console.log(error.message);
+        console.log(`error retrieving message: ${error.message}`);
+        
       }
     }
 
@@ -427,7 +429,8 @@ class Chat extends React.Component{
         await AsyncStorage.removeItem('messages');
         console.log('offline messages successfully removed');
       } catch (error) {
-        console.log('error removing offline messages: '+ error);
+        console.log(`error removing offline messages: ${error}`);
+        
       }
     }
 
