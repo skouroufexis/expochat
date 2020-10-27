@@ -18,7 +18,7 @@ const firebase = require('firebase/app');
 require('firebase/firestore');
 require('firebase/auth');
 
-LogBox.ignoreLogs(['Setting a timer','Animated.event']);
+LogBox.ignoreLogs(['Setting a timer','Animated.event',"Can't perform a React update"]);
 
 // Firebase configuration
 const firebaseConfig = {
