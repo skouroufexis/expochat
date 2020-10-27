@@ -4,6 +4,7 @@ import {Platform, KeyboardAvoidingView , StyleSheet, Text, View, TextInput,Butto
 
 import { event } from 'react-native-reanimated';
 
+
 const image ='./Background.png';
 
 
@@ -12,21 +13,28 @@ class Start extends React.Component{
     constructor(){
         super();
         this.state={username:'',
-                    colour:''
+                    colour:'',
+                    
                     }
     }
     
     render(){
         return(
             
-            
+            // <KeyboardAvoidingView
+            //         behavior={Platform.OS == "ios" ? "padding" : "height"}
+            //         style={styles.container}
+            // >
             <View style={styles.container}>
                 
                 <ImageBackground style={styles.background} source={require(image)}>
-
+                    
+                    
                     <View style={styles.main}>
+                        
                         <TextInput style={styles.textInput} 
                                 placeholder='Your Name' onChangeText={(username)=>this.setName(username)}
+                                
                         />
                         
                         <View style={styles.label}><Text style={styles.label} >Choose background colour</Text></View>   
@@ -47,6 +55,7 @@ class Start extends React.Component{
                 </ImageBackground>
                 
             </View>
+            // </KeyboardAvoidingView>
         )
     }
 
@@ -63,6 +72,7 @@ class Start extends React.Component{
         this.setState({colour:colour});
         
     }
+
     //function update the State with the typed-in username
     setName=(username)=>{
 
@@ -97,7 +107,6 @@ const styles = StyleSheet.create({
       alignItems:'center',
       justifyContent: 'center',
     },
-
     label:{
         color:'rgba(0,0,0,0.4)',
         fontWeight:'bold',
@@ -108,8 +117,10 @@ const styles = StyleSheet.create({
     textInput: {
         borderStyle:'solid',  
         backgroundColor:'white',
-
-        borderColor:'rgba(0,0,0,0.3)',
+        position:'absolute',
+        top:'4%',
+        zIndex:1,
+        borderColor:'rgba(0,0,0,0.1)',
         borderWidth:0.9,
         width:'88%',
         padding:'2%',
