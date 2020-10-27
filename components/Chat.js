@@ -246,12 +246,12 @@ class Chat extends React.Component{
 
       //unsibscribe from two processes
 
-      var unsubscribe = auth.onAuthStateChanged(user=>{
+      let unsubscribe = auth.onAuthStateChanged(user=>{
         this.setState({userID:user.uid});
       })
       
       
-      var unsubscribe1=db.collection('messages').onSnapshot(snapshot=>{
+      let unsubscribe1=db.collection('messages').onSnapshot(snapshot=>{
         let changes = snapshot.docChanges();
         this.updateMessages(changes);
       });
