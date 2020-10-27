@@ -79,7 +79,7 @@ export default class CustomActions extends React.Component{
 
             let image = await ImagePicker.launchImageLibraryAsync({
               mediaTypes: 'Images',
-            }).catch(error => console.log(error));
+            }).catch(error => console.log(`error uploading image: ${error}` ));
        
             if (!image.cancelled) {
               let url=image.uri;
@@ -87,13 +87,13 @@ export default class CustomActions extends React.Component{
               try {
                 //upload image to firebase and then get file download url
                 let imageUrl=await this.uploadToFirebase(url);
-                console.log(imageUrl);
+                console.log(`successfully uploaded image to firebase: ${url}`);
                 this.addImageUrl(imageUrl);
 
               }
 
               catch (error){
-                console.log(error);
+                console.log(`error uploading image: ${error}`);
               }
               
             }
@@ -110,19 +110,19 @@ export default class CustomActions extends React.Component{
           {
             let image = await ImagePicker.launchCameraAsync({
               mediaTypes: 'Images',
-            }).catch(error => console.log(error));
+            }).catch(error => console.log(`error taking image: ${error}`));
        
             if (!image.cancelled) {
               try {
                 let url=image.uri;
                 //upload image to firebase and then get file download url
                 let imageUrl=await this.uploadToFirebase(url);
-                console.log(imageUrl);
+                console.log(`successfully uploaded image ${url}`);
                 this.addImageUrl(imageUrl);
               }
 
               catch (error){
-                console.log(error);
+                console.log(`error uploading image: ${error}`);
               }
             }
 
@@ -139,15 +139,15 @@ export default class CustomActions extends React.Component{
           if (location) {
            
            try {
-            console.log(location);
             let longitude=location.coords.longitude;
             let latitude=location.coords.latitude;
             this.addLocation(longitude,latitude);
+            console.log(`successfully sent location. Longitude: ${longitude}, latitude: ${latitude}`);
 
           }
 
           catch (error){
-            console.log(error);
+            console.log(`error sending loation: ${error}`);
           }
           }
         }
