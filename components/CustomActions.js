@@ -158,8 +158,8 @@ export default class CustomActions extends React.Component{
       uploadToFirebase = async (url)=>{
 
       const firebase = require ('firebase');
-      var storage = firebase.storage();
-      var storageRef = storage.ref();  
+      let storage = firebase.storage();
+      let storageRef = storage.ref();  
 
       const response = await fetch(url);
       const blob = await response.blob();
