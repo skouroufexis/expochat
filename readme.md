@@ -5,5 +5,7 @@
 **INSTALLATION**
 *Open the project in your code editor
 * run `npm install` in your terminal in the project folder
-*  * **install Expo**
-* * download *Expo* from the App store (iOS or Android)   
+* download *Expo* from the App store (iOS or Android)   
+*run`npm start` or `expo start` in your terminal in the project folder. The  browser will open the project at `http://localhost:19002`.
+*open the *Expo* application on your device and scan the QR code provided at `http://localhost:19002` to add the project to your *Expo* app.
+
