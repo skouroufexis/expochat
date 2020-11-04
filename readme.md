@@ -3,4 +3,7 @@
 <br>
 
 **INSTALLATION**
-
+*Open the project in your code editor
+* run `npm install` in your terminal in the project folder
+*  * **install Expo**
+* * download *Expo* from the App store (iOS or Android)   
