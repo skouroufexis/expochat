@@ -14,8 +14,7 @@
 * Go to  https://firebase.google.com and create an account. <br>
 * Click on *Add a project* and follow the steps to create a new projet
 * Link  **expochat** with your new project 
-![image test]
-('./firebase1')
+<img src="./firebase1.png">
 
 
 
