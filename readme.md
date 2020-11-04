@@ -11,7 +11,11 @@
 * Open the *Expo* application on your device and scan the QR code provided at `http://localhost:19002` to add the project to your *Expo* app.<br>
 
 **Database setup**<br>
-Go to  https://firebase.google.com
+* Go to  https://firebase.google.com and create an account. <br>
+* Click on *Add a project* and follow the steps to create a new projet
+* Link  **expochat** with your new project 
+![image test]
+('./firebase1')
 
 
 
