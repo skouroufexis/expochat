@@ -14,10 +14,10 @@
 * Go to  https://firebase.google.com and create an account. <br>
 * Click on *Add a project* and follow the steps to create a new projet
 * Link  **expochat** with your new project. 
-<img src="./firebase1.png" width=300>
+<img src="./firebase1.png" width=500>
 
 * Initialize **firebase** by including the configuration parameters provided by Firebase in *Chat.js*
-<img src="./firebase2.png" width=300>
+<img src="./firebase2.png" width=500>
 <br>
 
 **Dependencies**<br>
