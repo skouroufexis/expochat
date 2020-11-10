@@ -24,23 +24,23 @@
 Ensure the following dependencies are included. If something is missing, install via *npm* or *yarn* <br>
 * **react** 
     * *react-dom* 
-* * *react navigation* 
+    * *react navigation* 
 
 * **react native** 
-  *netinfo (react-native-community/netinfo)*
- * *react-navigation (react-navigation/native)*
- * *react navigation stack (react-navigation/stack)* 
- * *react-native-gifted-chat*
- * *react-native-maps*
- * *react-native-reanimated*
- * *react-native-gesture-handler*
- * *react-native-web*
- * *react-native-screens*
- * *react-native-safe-area-context*<br>
+    *netinfo (react-native-community/netinfo)*
+    * *react-navigation (react-navigation/native)*
+    * *react navigation stack (react-navigation/stack)* 
+    * *react-native-gifted-chat*
+    * *react-native-maps*
+    * *react-native-reanimated*
+    * *react-native-gesture-handler*
+    * *react-native-web*
+    * *react-native-screens*
+    * *react-native-safe-area-context*<br>
 * **expo (react-navigation/stack)**
- * *expo-permissions*
- * *expo-image-picker*
- * *expo-location* <br>
+    * *expo-permissions*
+    * *expo-image-picker*
+    * *expo-location* <br>
 * **firebase**
 
 
