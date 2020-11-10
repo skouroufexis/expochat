@@ -23,7 +23,7 @@
 **Dependencies**<br>
 Ensure the following dependencies are included. If something is missing, install via *npm* or *yarn* <br>
 * **react** 
-* * *react-dom* 
+    * *react-dom* 
 * * *react navigation* 
 
 * **react native** 
